@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections;   
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
@@ -6,6 +6,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange = 1f;
+    [SerializeField] private Cooldown _cooldown;
 
     private KeyCode _attackKey = KeyCode.E;
     private int _attackDamage = 20;
@@ -33,15 +34,7 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        StartCoroutine(AttackCooldown(_delay));
-    }
-
-    private IEnumerator AttackCooldown(int delay)
-    {
-        var wait = new WaitForSeconds(delay);
-        Debug.Log("delay is working");
-
-        yield return wait;
+        StartCoroutine(_cooldown.AttackCooldown(_delay));
     }
 
     private void OnDrawGizmosSelected()

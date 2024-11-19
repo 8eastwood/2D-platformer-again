@@ -1,11 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyPatrolBehavior : MonoBehaviour
 {
     [SerializeField] private PlayerDetector _playerDetector;
-    [SerializeField] private Waypoint _pointA;
-    [SerializeField] private Waypoint _pointB;
+    [SerializeField] private List<Waypoint> _waypoints;
     [SerializeField] private float _speed = 2f;
 
     private Quaternion _inverseRotation = Quaternion.Euler(0, 180, 0);
@@ -15,11 +15,13 @@ public class EnemyPatrolBehavior : MonoBehaviour
     private float _distanceToWaypoint = 0.5f;
     private bool _isPlayerNear = false;
     private bool _isChaseActive = false;
+    private int _waypointIndexA = 0;
+    private int _waypointIndexB = 1;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _currentWaypointToGo = _pointA.transform;
+        _currentWaypointToGo = _waypoints[_waypointIndexA].transform;
     }
 
     private void OnEnable()
@@ -53,7 +55,7 @@ public class EnemyPatrolBehavior : MonoBehaviour
             float directionChanger = -1f;
             Vector2 point = _currentWaypointToGo.position - transform.position;
 
-            if (_currentWaypointToGo == _pointB.transform)
+            if (_currentWaypointToGo == _waypoints[_waypointIndexB].transform)
             {
                 _rigidbody.velocity = new Vector2(_speed, 0);
                 transform.rotation = _inverseRotation; 
@@ -66,7 +68,7 @@ public class EnemyPatrolBehavior : MonoBehaviour
 
             if ((transform.position - _currentWaypointToGo.position).sqrMagnitude < _distanceToWaypoint * _distanceToWaypoint)
             {
-                _currentWaypointToGo = _currentWaypointToGo == _pointB.transform ? _pointA.transform : _pointB.transform;
+                _currentWaypointToGo = _currentWaypointToGo == _waypoints[_waypointIndexB].transform ? _waypoints[_waypointIndexA].transform : _waypoints[_waypointIndexB].transform;
             }
         }
     }
