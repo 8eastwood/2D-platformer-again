@@ -45,7 +45,7 @@ public class EnemyCombat : MonoBehaviour
     private void Attack(Player player)
     {
         player.TakeDamage(_enemyAttackDamage);
-        //StartCoroutine(_cooldown.AttackCooldown(_attackDelay));
+        //StartCoroutine(AttackCooldown(_attackDelay));
     }
 
     private void OnDrawGizmosSelected()
