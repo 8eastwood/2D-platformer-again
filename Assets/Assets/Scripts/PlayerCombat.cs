@@ -5,7 +5,6 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private Transform _attackPoint;
-    [SerializeField] private Cooldown _cooldown;
     [SerializeField] private float _attackRange = 1f;
 
     private KeyCode _attackKey = KeyCode.E;
@@ -30,7 +29,6 @@ public class PlayerCombat : MonoBehaviour
             if (hit.TryGetComponent(out Enemy enemy))
             {
                 enemy.TakeDamage(_attackDamage);
-                Debug.Log("player attack");
                 _isAttackPossible = false;
             }
         }
@@ -41,18 +39,9 @@ public class PlayerCombat : MonoBehaviour
     private IEnumerator AttackCooldown(int delay)
     {
         var wait = new WaitForSeconds(delay);
-        Debug.Log("delay is working");
 
         yield return wait;
 
         _isAttackPossible = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (_attackPoint == null)
-            return;
-
-        Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
 }

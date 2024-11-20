@@ -20,7 +20,6 @@ public class Health : MonoBehaviour
     public void TakeHeal(int healPoints)
     {
         CurrentAmount = Math.Clamp(CurrentAmount + healPoints, _minAmount, _maxAmount);
-        Debug.Log("вылечено " + healPoints + " хп");
     }
 
     public void TakeDamage(int damage)

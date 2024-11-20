@@ -251,7 +251,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _attackPoint: {fileID: 7482074815888749528}
-  _cooldown: {fileID: 0}
   _attackRange: 0.4
 --- !u!114 &3090973173676439786
 MonoBehaviour:

@@ -29,11 +29,9 @@ public class EnemyCombat : MonoBehaviour
             yield return wait;
 
             _attackDelay -= Time.deltaTime;
-            Debug.Log("delay is working");
         }
         else
         {
-            Debug.Log("enemy hit player");
             Attack(player);
             _attackDelay = _cooldownTime;
         }
@@ -42,13 +40,5 @@ public class EnemyCombat : MonoBehaviour
     private void Attack(Player player)
     {
         player.TakeDamage(_enemyAttackDamage);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (_enemyAttackPoint == null)
-            return;
-
-        Gizmos.DrawWireSphere(_enemyAttackPoint.position, _enemyAttackRange);
     }
 }

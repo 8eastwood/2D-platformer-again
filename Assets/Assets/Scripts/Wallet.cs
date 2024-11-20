@@ -7,6 +7,5 @@ public class Wallet : MonoBehaviour
     public void AddCoin()
     {
         _coinsAmount++;
-        Debug.Log("Coin was collected.");
     }
 }

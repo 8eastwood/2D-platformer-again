@@ -33,7 +33,6 @@ public class PlayerDetector : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            Debug.Log("игрок в поле зрения");
             DetectPlayerNear(player);
         }
     }
