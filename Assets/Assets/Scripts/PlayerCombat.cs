@@ -5,10 +5,11 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private Transform _attackPoint;
-    [SerializeField] private float _attackRange = 1f;
     [SerializeField] private Cooldown _cooldown;
+    [SerializeField] private float _attackRange = 1f;
 
     private KeyCode _attackKey = KeyCode.E;
+    private bool _isAttackPossible;
     private int _attackDamage = 20;
     private int _delay = 3;
 
@@ -29,12 +30,22 @@ public class PlayerCombat : MonoBehaviour
             if (hit.TryGetComponent(out Enemy enemy))
             {
                 enemy.TakeDamage(_attackDamage);
-
                 Debug.Log("player attack");
+                _isAttackPossible = false;
             }
         }
 
-        StartCoroutine(_cooldown.AttackCooldown(_delay));
+        StartCoroutine(AttackCooldown(_delay));
+    }
+
+    private IEnumerator AttackCooldown(int delay)
+    {
+        var wait = new WaitForSeconds(delay);
+        Debug.Log("delay is working");
+
+        yield return wait;
+
+        _isAttackPossible = true;
     }
 
     private void OnDrawGizmosSelected()

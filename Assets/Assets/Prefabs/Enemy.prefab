@@ -293,8 +293,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerDetector: {fileID: 1971897335560916108}
-  _pointA: {fileID: 0}
-  _pointB: {fileID: 0}
+  _waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
   _speed: 1
 --- !u!114 &7780287691325414843
 MonoBehaviour:

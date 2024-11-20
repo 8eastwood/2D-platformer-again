@@ -7,16 +7,16 @@ public class Mover : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _speed = 4f;
     [SerializeField] private Animator _animator;
+    [SerializeField] private float _speed = 4f;
     
     public readonly int Speed = Animator.StringToHash(nameof(Speed));
     public readonly int Jumping = Animator.StringToHash(nameof(Jumping));
+    private KeyCode _jumpKey = KeyCode.Space;
     private float _horizontalMove;
     private float _jumpingPower = 8f;
     private bool _isFacingCorrect = true;
     private bool _isJump;
-    private KeyCode _jumpKey = KeyCode.Space;
 
     private void FixedUpdate()
     {

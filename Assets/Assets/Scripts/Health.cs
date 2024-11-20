@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
     [SerializeField] private int _maxAmount;
 
     private int _minAmount = 0;
+    private int _startAmount = 100;
 
     public int CurrentAmount { get; private set; }
 
@@ -13,12 +14,12 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        CurrentAmount = _maxAmount;
+        CurrentAmount = _startAmount;
     }
 
     public void TakeHeal(int healPoints)
     {
-        CurrentAmount += healPoints;
+        CurrentAmount = Math.Clamp(CurrentAmount + healPoints, _minAmount, _maxAmount);
         Debug.Log("вылечено " + healPoints + " хп");
     }
 
@@ -30,7 +31,6 @@ public class Health : MonoBehaviour
         {
             CurrentAmount = 0;
             Death?.Invoke();
-            //Die();
         }
     }
 }

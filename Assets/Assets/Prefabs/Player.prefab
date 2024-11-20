@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3533a47cf4e03e46bdfeaa2e155e54c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxAmount: 100
+  _maxAmount: 150
 --- !u!114 &1415808842190877010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +251,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _attackPoint: {fileID: 7482074815888749528}
+  _cooldown: {fileID: 0}
   _attackRange: 0.4
 --- !u!114 &3090973173676439786
 MonoBehaviour:
@@ -307,9 +308,9 @@ MonoBehaviour:
   _groundCheck: {fileID: 1293268476181941996}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  _speed: 4
+    m_Bits: 64
   _animator: {fileID: 2859011757611079761}
+  _speed: 4
 --- !u!1 &4524541883795207279
 GameObject:
   m_ObjectHideFlags: 0

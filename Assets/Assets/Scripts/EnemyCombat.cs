@@ -6,46 +6,42 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private Transform _enemyAttackPoint;
     [SerializeField] private float _enemyAttackRange = 0.4f;
     [SerializeField] private bool _isAttackEnabled;
-    //[SerializeField] private Cooldown _cooldown;
+    [SerializeField] private int _enemyAttackDamage = 50;
 
-    private float _attackDelay;
-    private float _cooldown = 3;
-    private int _enemyAttackDamage = 1;
-
-    private void Awake()
-    {
-        _attackDelay = _cooldown;
-    }
+    private float _attackDelay = 1;
+    private float _cooldownTime = 1;
+    private bool _isAttackPossible = true;
 
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.TryGetComponent(out Player player) && _isAttackEnabled)
         {
-            Attack(player);
-            Debug.Log("enemy hit player");
-            _attackDelay = _cooldown;
-
-            while (_attackDelay > 0)
-            {
-                Debug.Log("delay is working");
-                _attackDelay -= Time.deltaTime;
-            }
+            StartCoroutine(AttackWithRate(_cooldownTime, player));
         }
     }
 
-    private IEnumerator AttackCooldown(int delay)
+    private IEnumerator AttackWithRate(float delay, Player player)
     {
         var wait = new WaitForSeconds(delay);
 
-        Debug.Log("delay is working");
+        if (_attackDelay > 0)
+        {
+            yield return wait;
 
-        yield return wait;
+            _attackDelay -= Time.deltaTime;
+            Debug.Log("delay is working");
+        }
+        else
+        {
+            Debug.Log("enemy hit player");
+            Attack(player);
+            _attackDelay = _cooldownTime;
+        }
     }
 
     private void Attack(Player player)
     {
         player.TakeDamage(_enemyAttackDamage);
-        //StartCoroutine(AttackCooldown(_attackDelay));
     }
 
     private void OnDrawGizmosSelected()
