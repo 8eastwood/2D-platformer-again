@@ -7,11 +7,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Health _health;
+    [SerializeField] private Health _health;
 
-    private void Awake()
+    private void Update()
     {
-        _health = GetComponent<Health>();
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            TakeDamage(10);
+        }
     }
 
     public void Heal(int healPoints)

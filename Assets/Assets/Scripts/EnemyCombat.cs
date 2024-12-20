@@ -8,7 +8,7 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private bool _isAttackEnabled;
     [SerializeField] private int _enemyAttackDamage = 50;
 
-    private float _attackDelay = 1;
+    private float _attackDelay = 0.3f;
     private float _cooldownTime = 1;
     private bool _isAttackPossible = true;
 
