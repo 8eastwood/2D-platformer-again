@@ -8,7 +8,7 @@ public class InputReader : MonoBehaviour
     private float _horizontalMove;
     private bool _isJumpKeyPressed = false;
 
-    //public bool IsJumpKeyPressed => _isJumpKeyPressed;
+    public bool IsJumpKeyPressed => Input.GetKeyDown(_jumpKey);
     public float HorizontalMove => _horizontalMove;
 
     private void Update()
@@ -16,13 +16,13 @@ public class InputReader : MonoBehaviour
         _horizontalMove = Input.GetAxisRaw(Horizontal);
     }
 
-    public bool IsJumpKeyPressed()
-    {
-        if (Input.GetKeyDown(_jumpKey))
-        {
-            _isJumpKeyPressed = true;
-        }
+    //public bool IsJumpKeyPressed()
+    //{
+    //    if (Input.GetKeyDown(_jumpKey))
+    //    {
+    //        _isJumpKeyPressed = true;
+    //    }
 
-        return _isJumpKeyPressed;
-    }
+    //    return _isJumpKeyPressed;
+    //}
 }

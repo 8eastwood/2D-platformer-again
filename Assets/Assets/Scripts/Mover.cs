@@ -10,17 +10,17 @@ public class Mover : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private float _speed = 4f;
     [SerializeField] private InputReader _inputReader;
+    [SerializeField] private float _jumpingPower = 20f;
 
     public readonly int Jumping = Animator.StringToHash(nameof(Jumping));
     public readonly int Speed = Animator.StringToHash(nameof(Speed));
     private Quaternion _inverseRotation = Quaternion.Euler(0, 180, 0);
-    private float _jumpingPower = 8f;
     private float _radius = 0.2f;
     private bool _isJump;
 
     private void Awake()
     {
-        StartCoroutine(TryJump());
+        //StartCoroutine(CheckGround());
     }
 
     private void FixedUpdate()
@@ -29,14 +29,15 @@ public class Mover : MonoBehaviour
 
         if (_isJump)
         {
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpingPower);
+            //_rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpingPower);
+            //StartCoroutine()
             _animator.SetBool(Jumping, true);
             Debug.Log("ןנûד");
 
-            if (IsGrounded())
-            {
-                _isJump = false;
-            }
+            //if (IsGrounded())
+            //{
+            //    _isJump = false;
+            //}
         }
 
         if (_isJump == false)
@@ -49,19 +50,32 @@ public class Mover : MonoBehaviour
     {
         _animator.SetFloat(Speed, Mathf.Abs(_inputReader.HorizontalMove));
 
+            Debug.Log(_inputReader.IsJumpKeyPressed);
+        if (_inputReader.IsJumpKeyPressed && IsGrounded())
+        {
+            Jump();
+        }
+
         FlipSide();
     }
 
-    private IEnumerator TryJump()
+    private void Jump()
     {
-        if (_inputReader.IsJumpKeyPressed())
+        _rigidBody.AddForce(Vector2.up * _jumpingPower, ForceMode2D.Impulse);
+
+        //StartCoroutine(CheckGround());
+    }
+
+    private IEnumerator CheckGround()
+    {
+        while (enabled)
         {
-            _isJump = true;
+            IsGrounded();
         }
 
         yield return new WaitUntil(IsGrounded);
 
-        _isJump = false;
+        //_isJump = false;
     }
 
     private bool IsGrounded()
