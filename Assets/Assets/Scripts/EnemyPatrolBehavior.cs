@@ -73,6 +73,12 @@ public class EnemyPatrolBehavior : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _playerDetector.PlayerEntered -= Chase;
+        _playerDetector.PlayerEscaped -= Patrol;
+    }
+
     private void Chase(Player player)
     {
         _player = player;
@@ -83,11 +89,5 @@ public class EnemyPatrolBehavior : MonoBehaviour
     private void Patrol()
     {
         _isChaseActive = false;
-    }
-
-    private void OnDisable()
-    {
-        _playerDetector.PlayerEntered -= Chase;
-        _playerDetector.PlayerEscaped -= Patrol;
     }
 }

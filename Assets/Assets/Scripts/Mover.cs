@@ -1,29 +1,31 @@
+using System.Collections;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    private const string Horizontal = "Horizontal";
-
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private Transform _sprite;
     [SerializeField] private Animator _animator;
     [SerializeField] private float _speed = 4f;
+    [SerializeField] private InputReader _inputReader;
 
     public readonly int Jumping = Animator.StringToHash(nameof(Jumping));
     public readonly int Speed = Animator.StringToHash(nameof(Speed));
     private Quaternion _inverseRotation = Quaternion.Euler(0, 180, 0);
-    private KeyCode _jumpKey = KeyCode.Space;
-    private float _horizontalMove;
     private float _jumpingPower = 8f;
     private float _radius = 0.2f;
     private bool _isJump;
-    private bool _isFacingCorrect = true;
+
+    private void Awake()
+    {
+        StartCoroutine(TryJump());
+    }
 
     private void FixedUpdate()
     {
-        _rigidBody.velocity = new Vector2(_horizontalMove * _speed, _rigidBody.velocity.y);
+        _rigidBody.velocity = new Vector2(_inputReader.HorizontalMove * _speed, _rigidBody.velocity.y);
 
         if (_isJump)
         {
@@ -34,7 +36,6 @@ public class Mover : MonoBehaviour
             if (IsGrounded())
             {
                 _isJump = false;
-
             }
         }
 
@@ -46,15 +47,21 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
-        _horizontalMove = Input.GetAxisRaw(Horizontal);
-        _animator.SetFloat(Speed, Mathf.Abs(_horizontalMove));
+        _animator.SetFloat(Speed, Mathf.Abs(_inputReader.HorizontalMove));
 
-        if (Input.GetKeyDown(_jumpKey) && IsGrounded())
+        FlipSide();
+    }
+
+    private IEnumerator TryJump()
+    {
+        if (_inputReader.IsJumpKeyPressed())
         {
             _isJump = true;
         }
 
-        FlipSide();
+        yield return new WaitUntil(IsGrounded);
+
+        _isJump = false;
     }
 
     private bool IsGrounded()
@@ -64,11 +71,11 @@ public class Mover : MonoBehaviour
 
     private void FlipSide()
     {
-        if (_horizontalMove < 0f)
+        if (_inputReader.HorizontalMove < 0f)
         {
             _sprite.rotation = _inverseRotation;
         }
-        else if (_horizontalMove > 0f)
+        else if (_inputReader.HorizontalMove > 0f)
         {
             _sprite.rotation = Quaternion.identity;
         }
