@@ -11,7 +11,6 @@ public class HealthViewBar : HealthView
     private Coroutine _coroutine;
     private float _step = 2f;
     private float _delay = 0.5f;
-    private bool _isWorking = false;
 
     private void Awake()
     {
@@ -39,7 +38,7 @@ public class HealthViewBar : HealthView
 
         if (_healthSlider.value == _health.CurrentAmount)
         {
-            StopAllCoroutines();
+            StopCoroutine(_coroutine);
         }
     }
 }

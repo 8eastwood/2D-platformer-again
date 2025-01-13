@@ -9,8 +9,7 @@ public class Health : MonoBehaviour
 
     public event Action DamageTaken;
     public event Action Healed;
-    public event Action Death;
-    public event Action HealthPointSet;
+    public event Action Died;
 
     private void Awake()
     {
@@ -31,7 +30,7 @@ public class Health : MonoBehaviour
         if (CurrentAmount <= 0)
         {
             CurrentAmount = 0;
-            Death?.Invoke();
+            Died?.Invoke();
         }
     }
 }

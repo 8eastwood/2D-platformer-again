@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthView : MonoBehaviour
+public abstract class HealthView : MonoBehaviour
 {
     [SerializeField] protected Health _health;
 
@@ -16,7 +16,5 @@ public class HealthView : MonoBehaviour
         _health.Healed -= UpdateHealth;
     }
 
-    protected virtual void UpdateHealth()
-    {
-    }
+    protected abstract void UpdateHealth();
 }

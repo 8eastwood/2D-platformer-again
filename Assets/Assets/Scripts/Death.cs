@@ -7,7 +7,7 @@ public class Death : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.Death += Die;
+        _health.Died += Die;
     }
 
     private void Die()

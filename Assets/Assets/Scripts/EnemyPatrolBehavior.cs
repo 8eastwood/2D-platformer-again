@@ -10,7 +10,6 @@ public class EnemyPatrolBehavior : MonoBehaviour
     [SerializeField] private float _speed = 2f;
 
     private Quaternion _inverseRotation = Quaternion.Euler(0, 180, 0);
-    private Quaternion _rotation = Quaternion.identity;
     private Rigidbody2D _rigidbody;
     private Transform _currentWaypointToGo;
     private Player _player;

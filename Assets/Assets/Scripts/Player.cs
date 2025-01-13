@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent (typeof(Health))]
 [RequireComponent(typeof(Player))]
-
 public class Player : MonoBehaviour
 {
     [SerializeField] private Health _health;

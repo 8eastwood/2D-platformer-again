@@ -4,9 +4,9 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    public readonly int Jumping = Animator.StringToHash(nameof(Jumping));
-    public readonly int Speed = Animator.StringToHash(nameof(Speed));
-    public readonly int Idle = Animator.StringToHash(nameof(Idle));
+    private readonly int Jumping = Animator.StringToHash(nameof(Jumping));
+    private readonly int Speed = Animator.StringToHash(nameof(Speed));
+    private readonly int Idle = Animator.StringToHash(nameof(Idle));
 
     public void PlayJumpAnimation()
     {
