@@ -6,9 +6,11 @@ public class EnemyPatrolBehavior : MonoBehaviour
 {
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private List<Waypoint> _waypoints;
+    [SerializeField] private Transform _sprite;
     [SerializeField] private float _speed = 2f;
 
     private Quaternion _inverseRotation = Quaternion.Euler(0, 180, 0);
+    private Quaternion _rotation = Quaternion.identity;
     private Rigidbody2D _rigidbody;
     private Transform _currentWaypointToGo;
     private Player _player;
@@ -40,12 +42,12 @@ public class EnemyPatrolBehavior : MonoBehaviour
             if (_player.transform.position.x > transform.position.x)
             {
                 _rigidbody.velocity = new Vector2(_speed, 0);
-                transform.rotation = _inverseRotation;
+                _sprite.rotation = _inverseRotation;
             }
             else
             {
                 _rigidbody.velocity = new Vector2(_speed * directionChanger, 0);
-                transform.rotation = Quaternion.identity;
+                _sprite.rotation = Quaternion.identity;
             }
         }
         else
@@ -58,12 +60,12 @@ public class EnemyPatrolBehavior : MonoBehaviour
             if (_currentWaypointToGo == _waypoints[_waypointIndexB].transform)
             {
                 _rigidbody.velocity = new Vector2(_speed, 0);
-                transform.rotation = _inverseRotation; 
+                _sprite.rotation = _inverseRotation;
             }
             else
             {
                 _rigidbody.velocity = new Vector2(_speed * directionChanger, 0);
-                transform.rotation = Quaternion.identity;
+                _sprite.rotation = Quaternion.identity;
             }
 
             if ((transform.position - _currentWaypointToGo.position).sqrMagnitude < _distanceToWaypoint * _distanceToWaypoint)

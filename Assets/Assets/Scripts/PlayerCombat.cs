@@ -9,8 +9,8 @@ public class PlayerCombat : MonoBehaviour
 
     private KeyCode _attackKey = KeyCode.E;
     private bool _isAttackPossible;
-    private int _attackDamage = 20;
-    private int _delay = 3;
+    private int _attackDamage = 30;
+    private int _delay = 1;
 
     private void FixedUpdate()
     {

@@ -4,15 +4,13 @@ using UnityEngine.UI;
 
 public class HealthViewBar : HealthView
 {
-    [SerializeField] private Transform _mainCamera;
     [SerializeField] private Transform _target;
-    [SerializeField] private Transform _worldSpaceCanvas;
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private Vector3 _offset;
 
     private Coroutine _coroutine;
-    private float _step = 0.5f;
-    private float _delay = 0.1f;
+    private float _step = 2f;
+    private float _delay = 0.5f;
     private bool _isWorking = false;
 
     private void Awake()
