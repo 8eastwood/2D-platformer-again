@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     private readonly int Running = Animator.StringToHash(nameof(Running));
     private Health _health;
 
+    public Health Health => _health;
+
     private void Awake()
     {
         _health = GetComponent<Health>();

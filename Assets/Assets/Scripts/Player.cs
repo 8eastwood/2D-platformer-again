@@ -8,13 +8,15 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Health _health;
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            TakeDamage(10);
-        }
-    }
+    public Health Health => _health;
+
+    //private void Update()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.E))
+    //    {
+    //        TakeDamage(10);
+    //    }
+    //}
 
     public void Heal(int healPoints)
     {

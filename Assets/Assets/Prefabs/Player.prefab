@@ -99,6 +99,37 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -1
   m_TargetDisplay: 0
+--- !u!1 &602773252855045724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746514620544092662}
+  m_Layer: 0
+  m_Name: leechAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &746514620544092662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602773252855045724}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.77, y: -0.089999914, z: 0.07138666}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3255723498579843477}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1735474480594166354
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +171,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1112510099292609755}
   - component: {fileID: 3683751337238111234}
-  - component: {fileID: 7277402655621457768}
   - component: {fileID: 2781385103324349798}
   m_Layer: 5
   m_Name: Health Bar
@@ -221,19 +251,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7277402655621457768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867582821108907255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02ad69856ab3b2f47b89319ea021ca2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 2669744425030336516}
 --- !u!114 &2781385103324349798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,9 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 2669744425030336516}
-  _mainCamera: {fileID: 0}
   _target: {fileID: 1979571240735314412}
-  _worldSpaceCanvas: {fileID: 0}
   _healthSlider: {fileID: 3683751337238111234}
   _offset: {x: 0, y: 1, z: 0}
 --- !u!1 &2741074146690286653
@@ -401,7 +416,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _attackPoint: {fileID: 7482074815888749528}
+  _leechAttackPoint: {fileID: 746514620544092662}
+  _player: {fileID: 5435239893975774926}
   _attackRange: 0.4
+  _leechAttackRange: 1.56
 --- !u!114 &3090973173676439786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,16 +471,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418405301de57c844bdb51c4b1111bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 8407235133301104168}
+  _inputReader: {fileID: 5933989191000508598}
   _rigidBody: {fileID: 3490140198292200212}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
   _groundCheck: {fileID: 1293268476181941996}
   _sprite: {fileID: 3255723498579843477}
-  _animation: {fileID: 8407235133301104168}
-  _speed: 4
-  _inputReader: {fileID: 5933989191000508598}
   _jumpingPower: 100
+  _speed: 4
 --- !u!114 &5933989191000508598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,7 +655,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 746514620544092662}
   m_Father: {fileID: 1979571240735314412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &867627381792603968

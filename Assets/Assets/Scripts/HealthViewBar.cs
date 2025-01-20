@@ -9,8 +9,8 @@ public class HealthViewBar : HealthView
     [SerializeField] private Vector3 _offset;
 
     private Coroutine _coroutine;
-    private float _step = 2f;
-    private float _delay = 0.5f;
+    private float _step = 3f;
+    private float _delay = 0.2f;
 
     private void Awake()
     {

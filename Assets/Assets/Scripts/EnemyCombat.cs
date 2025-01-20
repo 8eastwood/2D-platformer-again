@@ -4,13 +4,13 @@ using System.Collections;
 public class EnemyCombat : MonoBehaviour
 {
     [SerializeField] private Transform _enemyAttackPoint;
-    [SerializeField] private float _enemyAttackRange = 0.4f;
-    [SerializeField] private bool _isAttackEnabled;
+    //[SerializeField] private float _enemyAttackRange = 0.4f;
+    [SerializeField] private bool _isAttackEnabled = true;
     [SerializeField] private int _enemyAttackDamage = 50;
 
     private float _attackDelay = 0.3f;
     private float _cooldownTime = 1;
-    private bool _isAttackPossible = true;
+    //private bool _isAttackPossible = true;
 
     private void OnTriggerStay2D(Collider2D other)
     {
