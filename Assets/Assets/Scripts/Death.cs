@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(Health))]
+[RequireComponent(typeof(Health))]
 public class Death : MonoBehaviour
 {
     [SerializeField] private Health _health;
@@ -8,6 +8,11 @@ public class Death : MonoBehaviour
     private void OnEnable()
     {
         _health.Died += Die;
+    }
+
+    private void OnDisable()
+    {
+        _health.Died -= Die;
     }
 
     private void Die()

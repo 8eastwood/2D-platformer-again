@@ -4,49 +4,31 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private LayerMask _enemyLayer;
-    [SerializeField] private Transform _attackPoint;
     [SerializeField] private Transform _leechAttackPoint;
+    [SerializeField] private Transform _attackPoint;
     [SerializeField] private Player _player;
-    [SerializeField] private float _attackRange = 1f;
     [SerializeField] private float _leechAttackRange = 2f;
+    [SerializeField] private float _attackRange = 1f;
 
-    private KeyCode _attackKey = KeyCode.E;
-    private KeyCode _leechAttackKey = KeyCode.Q;
-    private float _leechAttackDuration = 4;
-    //private float _leechAttackDurationValue = 4;
-    private bool _isAttackPossible = true;
-    private int _attackDamage = 10;
-    private int _leechAttackDamage = 2;
-    private int _delay = 1;
-    //private int _leechDelay = 6;
-    private Coroutine _cooldownCoroutine;
     private Coroutine _leechAttackCoroutine;
+    private KeyCode _leechAttackKey = KeyCode.Q;
+    private KeyCode _attackKey = KeyCode.E;
+    private float _leechAttackDuration = 6;
+    private bool _isAttackPossible = true;
+    private int _leechAttackDamage = 7;
+    private int _attackDamage = 10;
+    private int _leechDelay = 4;
+    private int _delay = 1;
 
-
-    private void FixedUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(_attackKey) && _isAttackPossible)
         {
-            Debug.Log("бьем");
-
             Attack();
         }
         else if (Input.GetKeyDown(_leechAttackKey) && _isAttackPossible)
         {
             _leechAttackCoroutine = StartCoroutine(LeechAttack());
-            //LeechAttackDurationReset();
-        }
-    }
-
-    private void Update()
-    {
-        if (_isAttackPossible)
-        {
-            Debug.Log("можно жахнуть");
-        }
-        else
-        {
-            Debug.Log("нельзя");
         }
     }
 
@@ -68,33 +50,30 @@ public class PlayerCombat : MonoBehaviour
 
     private IEnumerator LeechAttack()
     {
-        Debug.Log("сосем");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_leechAttackPoint.position, _leechAttackRange, _enemyLayer);
-        float wait = 0;
+        Collider2D[] hitEnemies = new Collider2D[1];
+        int countColliders = Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position, _leechAttackRange, hitEnemies, _enemyLayer);
+        Collider2D collider = hitEnemies[0];
+        float currentTime = 0;
+        var waitForSecond = new WaitForSeconds(1);
 
-        while (wait != _leechAttackDuration)
+        while (currentTime <= _leechAttackDuration && collider != null)
         {
-            foreach (Collider2D hit in hitEnemies)
+            if (collider.TryGetComponent(out Enemy enemy))
             {
-                if (hit.TryGetComponent(out Enemy enemy))
-                {
-                    int enemyHealthBeforeAttack = enemy.Health.CurrentAmount;
-                    enemy.TakeDamage(_leechAttackDamage);
-                    _player.Health.TakeHeal(enemyHealthBeforeAttack - enemy.Health.CurrentAmount);
-                    _isAttackPossible = false;
-                    _leechAttackCoroutine = null;
-                }
+                int enemyHealthBeforeAttack = enemy.Health.CurrentAmount;
+                enemy.TakeDamage(_leechAttackDamage);
+                _player.Health.TakeHeal(enemyHealthBeforeAttack - enemy.Health.CurrentAmount);
+                _isAttackPossible = false;
             }
 
-            wait = Mathf.MoveTowards(wait, _leechAttackDuration, Time.deltaTime);
+            currentTime++;
 
-            yield return wait;
+            yield return waitForSecond;
         }
 
-        //_leechAttackDuration -= Time.deltaTime;
-        //Debug.Log(" время атаки = " + _leechAttackDuration);
+        currentTime = 0;
 
-        //_cooldownCoroutine = StartCoroutine(AttackCooldown(_leechDelay));
+        StartCoroutine(AttackCooldown(_leechDelay));
     }
 
     private IEnumerator AttackCooldown(int delay)
@@ -106,11 +85,6 @@ public class PlayerCombat : MonoBehaviour
 
         _isAttackPossible = true;
     }
-
-    //private void LeechAttackDurationReset()
-    //{
-    //    _leechAttackDuration = _leechAttackDurationValue;
-    //}
 
     private void OnDrawGizmosSelected()
     {

@@ -9,7 +9,7 @@ public class HealthViewBar : HealthView
     [SerializeField] private Vector3 _offset;
 
     private Coroutine _coroutine;
-    private float _step = 3f;
+    private float _step = 2f;
     private float _delay = 0.2f;
 
     private void Awake()
@@ -36,9 +36,9 @@ public class HealthViewBar : HealthView
             yield return wait;
         }
 
-        if (_healthSlider.value == _health.CurrentAmount)
-        {
-            StopCoroutine(_coroutine);
-        }
+        //if (_healthSlider.value == _health.CurrentAmount && _coroutine != null)
+        //{
+        //    StopCoroutine(_coroutine);
+        //}
     }
 }
