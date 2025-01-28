@@ -14,7 +14,6 @@ public class EnemyPatrolBehavior : MonoBehaviour
     private Transform _currentWaypointToGo;
     private Player _player;
     private float _distanceToWaypoint = 0.5f;
-    //private bool _isPlayerNear = false;
     private bool _isChaseActive = false;
     private int _waypointIndexA = 0;
     private int _waypointIndexB = 1;

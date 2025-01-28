@@ -10,14 +10,6 @@ public class Player : MonoBehaviour
 
     public Health Health => _health;
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyUp(KeyCode.E))
-    //    {
-    //        TakeDamage(10);
-    //    }
-    //}
-
     public void Heal(int healPoints)
     {
         _health.TakeHeal(healPoints);

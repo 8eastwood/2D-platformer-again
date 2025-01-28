@@ -10,6 +10,7 @@ public class AbilityBar : MonoBehaviour
 
     private Coroutine _coroutine;
     private float _amountOfSeconds = 1;
+    private float _cooldownStep = 2f;
     private float _delay = 0.2f;
     private float _step = 0.2f;
 
@@ -59,12 +60,10 @@ public class AbilityBar : MonoBehaviour
 
         while (rechargeTime < _ability.LeechDelay)
         {
-            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _ability.LeechAttackDuration, 2);
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _ability.LeechAttackDuration, _cooldownStep);
             rechargeTime++;
 
             yield return wait;
         }
-
-        //rechargeTime = 0;
     }
 }

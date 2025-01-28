@@ -49,12 +49,4 @@ public class PlayerCombat : MonoBehaviour
 
         StartCoroutine(_cooldown.AttackCooldown(_delay, _isAttackPossible));
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (_leechAttackPoint == null)
-            return;
-
-        Gizmos.DrawWireSphere(_leechAttackPoint.position, _leechAttackRange);
-    }
 }

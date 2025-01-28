@@ -35,10 +35,5 @@ public class HealthViewBar : HealthView
 
             yield return wait;
         }
-
-        //if (_healthSlider.value == _health.CurrentAmount && _coroutine != null)
-        //{
-        //    StopCoroutine(_coroutine);
-        //}
     }
 }

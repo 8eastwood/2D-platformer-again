@@ -35,18 +35,15 @@ public class Ability : MonoBehaviour
                 int enemyHealthBeforeAttack = enemy.Health.CurrentAmount;
                 enemy.TakeDamage(_leechAttackDamage);
                 player.Health.TakeHeal(enemyHealthBeforeAttack - enemy.Health.CurrentAmount);
-                Debug.Log("sosem");
             }
 
             _currentTime++;
-            Debug.Log(_currentTime);
 
             yield return waitForSecond;
         }
 
-        Debug.Log("цикл абилки завершен");
         _currentTime = 0;
 
-        //StartCoroutine(_cooldown.AttackCooldown(_leechDelay, isAttackPossible));
+        StartCoroutine(_cooldown.AttackCooldown(_leechDelay, isAttackPossible));
     }
 }
