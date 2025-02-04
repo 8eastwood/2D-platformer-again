@@ -530,9 +530,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAttackPoint: {fileID: 1477354800902434611}
-  _enemyAttackRange: 0.3
   _isAttackEnabled: 1
-  _enemyAttackDamage: 5
+  _enemyAttackDamage: 25
 --- !u!114 &1160869905150804660
 MonoBehaviour:
   m_ObjectHideFlags: 0

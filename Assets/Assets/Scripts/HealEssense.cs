@@ -4,5 +4,5 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class HealEssense : CollectibleItem
 {
-    public int _healPoints { get; private set; } = 50;
+    public int HealPoints { get; private set; } = 50;
 }

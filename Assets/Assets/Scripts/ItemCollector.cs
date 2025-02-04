@@ -14,7 +14,7 @@ public class ItemCollector : MonoBehaviour
         }
         else if (other.gameObject.TryGetComponent(out HealEssense healEssense))
         {
-            _player.Heal(healEssense._healPoints);
+            _player.Heal(healEssense.HealPoints);
             healEssense.DestroyAfterCapture();
         }
     }

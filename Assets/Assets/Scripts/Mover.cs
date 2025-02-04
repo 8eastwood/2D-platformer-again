@@ -21,7 +21,6 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
-
         if (Mathf.Abs(_inputReader.HorizontalMove) > 0)
         {
             _playerAnimator.PlayRunAnimation(_inputReader.HorizontalMove);

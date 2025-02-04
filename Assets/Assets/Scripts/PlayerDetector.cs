@@ -4,11 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerDetector : MonoBehaviour
 {
-    public Transform _playerPosition { get; private set; }
-    public bool IsPlayerNear { get; private set; } = false;
-
     public event Action<Player> PlayerEntered;
     public event Action PlayerEscaped;
+
+    public bool IsPlayerNear { get; private set; } = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,9 +35,5 @@ public class PlayerDetector : MonoBehaviour
     {
         PlayerEscaped?.Invoke();
         IsPlayerNear = false;
-    }
-    private Transform TransferPlayerPosition(Transform playerPosition)
-    {
-        return playerPosition;
     }
 }

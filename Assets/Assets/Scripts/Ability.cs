@@ -4,46 +4,76 @@ using System.Collections;
 
 public class Ability : MonoBehaviour
 {
-    [SerializeField] private Cooldown _cooldown;
+    [SerializeField] private Transform _leechAttackPoint;
+    [SerializeField] private float _leechAttackRange;
+    [SerializeField] private Health _health;
 
+    private WaitForSeconds _leechDelay;
     private float _leechAttackDuration = 6;
     private float _currentTime = 0;
-    private int _leechDelay = 4;
     private int _leechAttackDamage = 7;
-
-    public float LeechAttackDuration => _leechAttackDuration;
-    public float CurrentTime => _currentTime;
-    public float LeechDelay => _leechDelay;
+    private int _leechDelayTime = 4;
+    private bool _isAttackPossible = true;
 
     public event Action Leeched;
 
-    public IEnumerator LeechAttack(Player player, bool isAttackPossible, PlayerCombat playerCombat)
+    public float LeechAttackDuration => _leechAttackDuration;
+    public float CurrentTime => _currentTime;
+    public float LeechDelay => _leechDelayTime;
+
+    private void Awake()
+    {
+        _leechDelay = new WaitForSeconds(_leechDelayTime);
+
+        LeechAttackVisualScale();
+    }
+
+    private IEnumerator LeechAttack(LayerMask enemyLayer)
     {
         int arraySize = 1;
         float amountOfSeconds = 1;
-        Collider2D[] hitEnemies = new Collider2D[arraySize];
-        int countColliders = Physics2D.OverlapCircleNonAlloc(playerCombat.LeechAttackPoint.position, playerCombat.LeechAttackRange, hitEnemies, playerCombat.EnemyLayer);
-        Collider2D collider = hitEnemies[0];
         var waitForSecond = new WaitForSeconds(amountOfSeconds);
+        Debug.Log("Leech attack is active");
 
-        while (_currentTime <= _leechAttackDuration && collider != null)
+        while (_currentTime <= _leechAttackDuration)
         {
-            if (collider.TryGetComponent(out Enemy enemy))
+            Collider2D[] hitEnemies = new Collider2D[arraySize];
+            int countColliders = Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position, _leechAttackRange, hitEnemies, enemyLayer);
+            Collider2D collider = hitEnemies[0];
+            Leeched?.Invoke();
+
+            if (collider != null && collider.TryGetComponent(out Enemy enemy))
             {
-                isAttackPossible = false;
-                Leeched?.Invoke();
+                Debug.Log("Enemy founded");
+                _isAttackPossible = false;
                 int enemyHealthBeforeAttack = enemy.Health.CurrentAmount;
                 enemy.TakeDamage(_leechAttackDamage);
-                player.Health.TakeHeal(enemyHealthBeforeAttack - enemy.Health.CurrentAmount);
+                _health.TakeHeal(enemyHealthBeforeAttack - enemy.Health.CurrentAmount);
+                Debug.Log("Enemy leeched");
             }
 
             _currentTime++;
+            Debug.Log(_currentTime);
 
             yield return waitForSecond;
         }
 
+        Debug.Log("currentTime >= attack duration");
         _currentTime = 0;
 
-        StartCoroutine(_cooldown.AttackCooldown(_leechDelay, isAttackPossible));
+        StartCoroutine(Timer.Cooldown(_leechDelay, () => _isAttackPossible = true));
+    }
+
+    public void TryStart(LayerMask enemyLayer)
+    {
+        if (_isAttackPossible)
+        {
+            StartCoroutine(LeechAttack(enemyLayer));
+        }
+    }
+
+    private void LeechAttackVisualScale()
+    {
+        _leechAttackPoint.transform.localScale = new Vector3(_leechAttackRange, _leechAttackRange, _leechAttackRange);
     }
 }

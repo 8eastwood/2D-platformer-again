@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int CurrentAmount { get; private set; }
-    public int MinAmount { get; private set; } = 0;
-    public int MaxAmount { get; private set; } = 100;
-
     public event Action DamageTaken;
     public event Action Healed;
     public event Action Died;
+
+    public int CurrentAmount { get; private set; }
+    public int MinAmount { get; private set; } = 0;
+    public int MaxAmount { get; private set; } = 100;
 
     private void Awake()
     {
