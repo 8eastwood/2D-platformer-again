@@ -16,6 +16,7 @@ public class Ability : MonoBehaviour
     private bool _isAttackPossible = true;
 
     public event Action Leeched;
+    public event Action Cooldown;
 
     public float LeechAttackDuration => _leechAttackDuration;
     public float CurrentTime => _currentTime;
@@ -28,14 +29,22 @@ public class Ability : MonoBehaviour
         LeechAttackVisualScale();
     }
 
+    public void TryStart(LayerMask enemyLayer)
+    {
+        if (_isAttackPossible)
+        {
+            StartCoroutine(LeechAttack(enemyLayer));
+        }
+    }
+
     private IEnumerator LeechAttack(LayerMask enemyLayer)
     {
-        int arraySize = 1;
         float amountOfSeconds = 1;
+        int arraySize = 1;
         var waitForSecond = new WaitForSeconds(amountOfSeconds);
         Debug.Log("Leech attack is active");
 
-        while (_currentTime <= _leechAttackDuration)
+        while (_currentTime < _leechAttackDuration)
         {
             Collider2D[] hitEnemies = new Collider2D[arraySize];
             int countColliders = Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position, _leechAttackRange, hitEnemies, enemyLayer);
@@ -58,17 +67,12 @@ public class Ability : MonoBehaviour
             yield return waitForSecond;
         }
 
-        Debug.Log("currentTime >= attack duration");
-        _currentTime = 0;
-
-        StartCoroutine(Timer.Cooldown(_leechDelay, () => _isAttackPossible = true));
-    }
-
-    public void TryStart(LayerMask enemyLayer)
-    {
-        if (_isAttackPossible)
+        if (_currentTime != 0)
         {
-            StartCoroutine(LeechAttack(enemyLayer));
+            Debug.Log("currentTime = attack duration");
+            _currentTime = 0;
+            Cooldown?.Invoke();
+            StartCoroutine(Timer.Cooldown(_leechDelay, () => _isAttackPossible = true));
         }
     }
 
