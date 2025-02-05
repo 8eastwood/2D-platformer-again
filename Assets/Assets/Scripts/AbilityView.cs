@@ -10,20 +10,18 @@ public class AbilityView : MonoBehaviour
 
     private Coroutine _updateSliderCoroutine;
     private Coroutine _rechargeCoroutine;
-    private float _currentVelocity = 0.5f;
-    private float _amountOfSeconds = 1;
-    private float _cooldownStep = 0.2f;
+    private float _amountOfSeconds = 1f;
     private float _minValue = 0;
     private float _maxValue = 1;
-    private float _delay = 1f;
-    private float _step;
+    private float _step = 0.2f;
+    WaitForSeconds _wait;
 
     private void Awake()
     {
         _abilitySlider.minValue = _minValue;
         _abilitySlider.maxValue = _maxValue;
         _abilitySlider.value = _maxValue;
-        _step = _delay / _ability.LeechAttackDuration;
+        _wait = new WaitForSeconds(_amountOfSeconds);
     }
 
     private void OnEnable()
@@ -38,50 +36,46 @@ public class AbilityView : MonoBehaviour
         _ability.Cooldown -= UpdateRecharge;
     }
 
-    private void UpdateAbility()
+    private void UpdateAbility(float currentTime)
     {
         if (_updateSliderCoroutine != null)
         {
             StopCoroutine(_updateSliderCoroutine);
         }
 
-        _updateSliderCoroutine = StartCoroutine(UpdateSlider());
+        _updateSliderCoroutine = StartCoroutine(UpdateSlider(currentTime));
     }
 
-    private void UpdateRecharge()
+    private void UpdateRecharge(Coroutine coroutine)
     {
         if (_rechargeCoroutine != null)
         {
             StopCoroutine(_rechargeCoroutine);
         }
 
-        _rechargeCoroutine = StartCoroutine(Recharge());
+        _rechargeCoroutine = StartCoroutine(Recharge(coroutine));
     }
 
-    private IEnumerator UpdateSlider()
+    private IEnumerator UpdateSlider(float currentTime)
     {
-        WaitForSeconds wait = new WaitForSeconds(_delay);
-
-        while (_ability.CurrentTime < _ability.LeechAttackDuration)
+        while (_abilitySlider.value > _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration)
         {
-            _abilitySlider.value =
-                Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.minValue, _step);
-           
-            yield return wait;
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration, _step);
+
+            yield return _wait;
         }
     }
 
-    private IEnumerator Recharge()
+    private IEnumerator Recharge(Coroutine coroutine)
     {
-        WaitForSeconds wait = new WaitForSeconds(_amountOfSeconds);
         float rechargeTime = 0;
 
-        while (rechargeTime < _ability.LeechDelay)
+        while (coroutine != null && _abilitySlider.value < _abilitySlider.maxValue)
         {
-            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _ability.LeechAttackDuration, 1 / 4); // _cooldownStep);
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.minValue + rechargeTime / _ability.LeechDelay, _step);
             rechargeTime++;
 
-            yield return wait;
+            yield return _wait;
         }
     }
 }
