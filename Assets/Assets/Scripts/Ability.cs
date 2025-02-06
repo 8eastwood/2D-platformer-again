@@ -65,7 +65,7 @@ public class Ability : MonoBehaviour
 
             yield return waitForSecond;
         }
-
+ 
         if (_currentTime != 0)
         {
             _currentTime = 0;
