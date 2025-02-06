@@ -18,7 +18,7 @@ public class Ability : MonoBehaviour
 
     public event Action<float> Leeched;
     public event Action<Coroutine> Cooldown;
-    
+
     public Coroutine CooldownCoroutine => _cooldownCoroutine;
     public float LeechCooldownDuration => _leechCooldownDuration;
     public float LeechAttackDuration => _leechAttackDuration;
@@ -62,7 +62,7 @@ public class Ability : MonoBehaviour
 
             _currentTime++;
             Leeched?.Invoke(_currentTime);
-            
+
             yield return waitForSecond;
         }
 

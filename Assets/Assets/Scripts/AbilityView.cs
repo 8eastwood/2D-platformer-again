@@ -15,7 +15,6 @@ public class AbilityView : MonoBehaviour
     private float _maxValue = 1;
     private float _step = 0.2f;
     private WaitForSeconds _wait;
-    private float stepForm;
 
     private void Awake()
     {
