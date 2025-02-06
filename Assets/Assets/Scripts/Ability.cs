@@ -45,11 +45,10 @@ public class Ability : MonoBehaviour
         int arraySize = 1;
         var waitForSecond = new WaitForSeconds(amountOfSeconds);
 
-        while (_currentTime < _leechAttackDuration)
+        while (CurrentTime < _leechAttackDuration)
         {
             Collider2D[] hitEnemies = new Collider2D[arraySize];
-            int countColliders = Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position,
-                _leechAttackRange, hitEnemies, enemyLayer);
+            Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position, _leechAttackRange, hitEnemies, enemyLayer);
             Collider2D collider = hitEnemies[0];
 
             if (collider != null && collider.TryGetComponent(out Enemy enemy))
@@ -61,16 +60,16 @@ public class Ability : MonoBehaviour
             }
 
             _currentTime++;
-            Leeched?.Invoke(_currentTime);
+            Leeched?.Invoke(CurrentTime);
 
             yield return waitForSecond;
         }
  
-        if (_currentTime != 0)
+        if (CurrentTime != 0)
         {
             _currentTime = 0;
             _cooldownCoroutine = StartCoroutine(Timer.Cooldown(_leechDelay, () => _isAttackPossible = true));
-            Cooldown?.Invoke(_cooldownCoroutine);
+            Cooldown?.Invoke(CooldownCoroutine);
         }
     }
 

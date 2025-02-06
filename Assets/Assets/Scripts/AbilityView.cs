@@ -58,9 +58,7 @@ public class AbilityView : MonoBehaviour
 
     private float SliderTargetDestination(float currentTime)
     {
-        float value = _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration;
-
-        return value;
+        return _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration;
     }
     
     private IEnumerator UpdateSlider(float currentTime)

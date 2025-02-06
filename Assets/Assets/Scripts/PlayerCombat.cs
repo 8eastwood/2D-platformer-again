@@ -31,7 +31,6 @@ public class PlayerCombat : MonoBehaviour
         else if (_inputReader.IsLeechAttackKeyPressed )
         {
             _ability.TryStart(_enemyLayer);
-            //StartCoroutine(_ability.LeechAttack(_player, this));
         }
     }
 
