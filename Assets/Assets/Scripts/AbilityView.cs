@@ -72,7 +72,7 @@ public class AbilityView : MonoBehaviour
 
         while (coroutine != null && _abilitySlider.value < _abilitySlider.maxValue)
         {
-            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.minValue + rechargeTime / _ability.LeechDelay, _step);
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.minValue + rechargeTime / _ability.LeechCooldownDuration, _step);
             rechargeTime++;
 
             yield return _wait;

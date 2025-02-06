@@ -10,23 +10,23 @@ public class Ability : MonoBehaviour
 
     private WaitForSeconds _leechDelay;
     private Coroutine _cooldownCoroutine;
+    private float _leechCooldownDuration = 4;
     private float _leechAttackDuration = 6;
     private float _currentTime = 0;
     private bool _isAttackPossible = true;
     private int _leechAttackDamage = 7;
-    private int _leechDelayTime = 4;
 
     public event Action<float> Leeched;
     public event Action<Coroutine> Cooldown;
     
     public Coroutine CooldownCoroutine => _cooldownCoroutine;
     public float LeechAttackDuration => _leechAttackDuration;
-    public float LeechDelay => _leechDelayTime;
+    public float LeechCooldownDuration => _leechCooldownDuration;
     public float CurrentTime => _currentTime;
 
     private void Awake()
     {
-        _leechDelay = new WaitForSeconds(_leechDelayTime);
+        _leechDelay = new WaitForSeconds(_leechCooldownDuration);
 
         LeechAttackVisualScale();
     }
