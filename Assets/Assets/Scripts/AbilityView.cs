@@ -14,7 +14,8 @@ public class AbilityView : MonoBehaviour
     private float _minValue = 0;
     private float _maxValue = 1;
     private float _step = 0.2f;
-    WaitForSeconds _wait;
+    private WaitForSeconds _wait;
+    private float stepForm;
 
     private void Awake()
     {
@@ -56,11 +57,18 @@ public class AbilityView : MonoBehaviour
         _rechargeCoroutine = StartCoroutine(Recharge(coroutine));
     }
 
+    private float SliderTargetDestination(float currentTime)
+    {
+        float value = _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration;
+
+        return value;
+    }
+    
     private IEnumerator UpdateSlider(float currentTime)
     {
-        while (_abilitySlider.value > _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration)
+        while (_abilitySlider.value > SliderTargetDestination(currentTime))
         {
-            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.maxValue - currentTime / _ability.LeechAttackDuration, _step);
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, SliderTargetDestination(currentTime), _step);
 
             yield return _wait;
         }
