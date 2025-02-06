@@ -68,7 +68,8 @@ public class AbilityView : MonoBehaviour
     {
         while (_abilitySlider.value > SliderTargetDestination(currentTime))
         {
-            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, SliderTargetDestination(currentTime), _step);
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value,
+                SliderTargetDestination(currentTime), _step);
 
             yield return _wait;
         }
@@ -80,7 +81,8 @@ public class AbilityView : MonoBehaviour
 
         while (coroutine != null && _abilitySlider.value < _abilitySlider.maxValue)
         {
-            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value, _abilitySlider.minValue + rechargeTime / _ability.LeechCooldownDuration, _step);
+            _abilitySlider.value = Mathf.MoveTowards(_abilitySlider.value,
+                _abilitySlider.minValue + rechargeTime / _ability.LeechCooldownDuration, _step);
             rechargeTime++;
 
             yield return _wait;

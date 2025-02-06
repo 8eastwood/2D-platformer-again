@@ -20,8 +20,8 @@ public class Ability : MonoBehaviour
     public event Action<Coroutine> Cooldown;
     
     public Coroutine CooldownCoroutine => _cooldownCoroutine;
-    public float LeechAttackDuration => _leechAttackDuration;
     public float LeechCooldownDuration => _leechCooldownDuration;
+    public float LeechAttackDuration => _leechAttackDuration;
     public float CurrentTime => _currentTime;
 
     private void Awake()
@@ -48,7 +48,8 @@ public class Ability : MonoBehaviour
         while (_currentTime < _leechAttackDuration)
         {
             Collider2D[] hitEnemies = new Collider2D[arraySize];
-            int countColliders = Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position, _leechAttackRange, hitEnemies, enemyLayer);
+            int countColliders = Physics2D.OverlapCircleNonAlloc(_leechAttackPoint.position,
+                _leechAttackRange, hitEnemies, enemyLayer);
             Collider2D collider = hitEnemies[0];
 
             if (collider != null && collider.TryGetComponent(out Enemy enemy))
@@ -61,8 +62,7 @@ public class Ability : MonoBehaviour
 
             _currentTime++;
             Leeched?.Invoke(_currentTime);
-            Debug.Log(_currentTime);
-
+            
             yield return waitForSecond;
         }
 
